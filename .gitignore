@@ -1,0 +1,60 @@
+############################################
+# Unity
+############################################
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+[Dd]erivedDataCache/
+[Aa]ssets/**/[Aa]uto[Ss]treamingAssets*
+
+# Addressables cache (optional)
+[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.json
+
+# Unity packages
+*.unitypackage
+
+############################################
+# IDE / Editor (Visual Studio, Rider, VSCode)
+############################################
+.vs/
+.idea/
+.vscode/
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+
+# C# project/solution files (Unity regenerates these)
+*.csproj
+*.sln
+*.sln.iml
+*.asmdef.user
+
+############################################
+# OS junk
+############################################
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+############################################
+# Crash reports
+############################################
+sysinfo.txt
+
+############################################
+# Git / tooling (optional)
+############################################
+*.log
