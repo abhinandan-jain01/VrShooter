@@ -80,8 +80,8 @@ public class WaveSpawner : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenSpawns);
         }
 
-        // Wait wave clear
-        while (aliveEnemies > 0)
+        // Wait wave clear — also exit early if player dies
+        while (aliveEnemies > 0 && !(GameManager.I && GameManager.I.IsLost))
             yield return null;
 
         yield return new WaitForSeconds(timeBetweenWaves);

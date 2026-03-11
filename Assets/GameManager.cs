@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
             damagePanel.SetActive(damageFlashTimer > 0f);
         }
 
-        // Timer (use unscaled? no, only while running)
+        // Timer — only this value changes every frame, so update just the timer text here
         if (waveRunning && !IsWon && !IsLost)
         {
             waveTimeLeft -= Time.deltaTime;
@@ -95,10 +95,14 @@ public class GameManager : MonoBehaviour
                 waveTimeLeft = 0f;
                 Lose(); // time over => lose
             }
-        }
 
-        RefreshUI();
-        SetPanels();
+            // Refresh only the timer text (other UI is refreshed by state-change methods)
+            if (timerText)
+            {
+                int t = Mathf.CeilToInt(waveTimeLeft);
+                timerText.text = $"Time: {t}";
+            }
+        }
 
         // Restart (PC + XR) when ended
         if (IsWon || IsLost)
@@ -222,13 +226,7 @@ public class GameManager : MonoBehaviour
         if (waveText) waveText.text = $"Wave: {Mathf.Max(1, CurrentWave)}";
         if (aliveText) aliveText.text = $"Alive: {AliveEnemies}";
         if (scoreText) scoreText.text = $"Score: {Score}";
-
         if (ammoText && gunAmmo) ammoText.text = $"Ammo: {gunAmmo.MagAmmo}/{gunAmmo.ReserveAmmo}";
-
-        if (timerText)
-        {
-            int t = Mathf.CeilToInt(waveTimeLeft);
-            timerText.text = $"Time: {t}";
-        }
+        if (timerText) timerText.text = $"Time: {Mathf.CeilToInt(waveTimeLeft)}";
     }
 }

@@ -583,6 +583,27 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   ammo: {fileID: 278968528}
+  xrFireAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Xr Fire
+      m_Type: 1
+      m_ExpectedControlType: Axis
+      m_Id: a1f3c8e2-72b4-4d91-bc3a-9e0f2d1a5c87
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - name: 
+        id: b5d2e1f4-83c5-4e02-ad4b-0f1e3c2a7b96
+        path: <XRController>{RightHand}/trigger
+        interactions: 
+        processors: 
+        groups: XR
+        action: Xr Fire
+        isComposite: 0
+        isPartOfComposite: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
 --- !u!114 &278968528
 MonoBehaviour:
   m_ObjectHideFlags: 0

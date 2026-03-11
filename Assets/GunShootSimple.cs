@@ -20,24 +20,39 @@ public class GunShootSimple : MonoBehaviour
     public LayerMask enemyMask;
     public GunAmmo ammo;
 
+    [Header("XR Input")]
+    public InputActionProperty xrFireAction; // bind to XRI RightHand / Trigger in the Inspector
+
     float lastFire;
+
+    void OnEnable()
+    {
+        if (xrFireAction.action != null) xrFireAction.action.Enable();
+    }
+
+    void OnDisable()
+    {
+        if (xrFireAction.action != null) xrFireAction.action.Disable();
+    }
+
     void Start()
     {
         if (!ammo) ammo = GetComponent<GunAmmo>();
-
     }
+
     void Update()
     {
         if (GameManager.I && (GameManager.I.IsLost || GameManager.I.IsWon)) return;
 
-        // Works immediately in Editor testing:
+        // Mouse (editor / desktop testing)
         bool fire = Mouse.current != null && Mouse.current.leftButton.isPressed;
 
-        // Try XR trigger too (works when simulator/headset provides it):
-        if (!fire)
+        // XR trigger via InputActionProperty (works on real headsets)
+        if (!fire && xrFireAction.action != null)
         {
-            var rightTrig = Gamepad.current?.rightTrigger.ReadValue() ?? 0f;
-            fire = rightTrig > 0.8f;
+            float v = 0f;
+            try { v = xrFireAction.action.ReadValue<float>(); } catch { /* action type mismatch - ignore */ }
+            if (v > 0.8f) fire = true;
         }
 
         if (fire) TryFire();
@@ -46,8 +61,6 @@ public class GunShootSimple : MonoBehaviour
     void TryFire()
     {
         if (ammo && !ammo.CanShoot()) return;
-      
-
 
         if (Time.time - lastFire < fireCooldown) return;
         lastFire = Time.time;
@@ -74,7 +87,6 @@ public class GunShootSimple : MonoBehaviour
 
         StartCoroutine(FlashLine(origin, end));
         if (ammo) ammo.ConsumeBullet();
-
     }
 
     Vector3 GetAutoAimedDirection(Vector3 origin, Vector3 forward)
@@ -106,7 +118,6 @@ public class GunShootSimple : MonoBehaviour
 
     IEnumerator FlashLine(Vector3 start, Vector3 end)
     {
-
         if (!line) yield break;
         line.enabled = true;
         line.SetPosition(0, start);
@@ -115,5 +126,3 @@ public class GunShootSimple : MonoBehaviour
         line.enabled = false;
     }
 }
-
-//public interface IDamageable { void TakeDamage(int amount); }
